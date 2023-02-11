@@ -16,7 +16,7 @@ authRouter.get('/register', (req, res) => {
 //Post Register Page
 authRouter.post('/register', async (req, res) => {
     const { username, email, password, repeatPassword } = req.body;
-
+    console.log(req.body);
     try {
         const token = await authService.register(username, email, password, repeatPassword);
 
