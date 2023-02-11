@@ -24,7 +24,13 @@ exports.wishlistBook = async (bookId, user_id) => {
     await book.save();
 };
 
+exports.bookEdit = async (id, book) => {
+    await Book.findByIdAndUpdate(id, book, {runValidators: true});
+};
 
+exports.bookDelete = async(id)=> {
+    await Book.findByIdAndDelete(id);
+}
 
 //Or like that
 // async function getAll(){
