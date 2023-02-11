@@ -3,17 +3,17 @@ const mongoose = require('mongoose');
 const bookSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
-        minLength: 2,
+        required: [true,'Title is required'],
+        minLength: [2, 'Title must be at least 2 characters'],
     },
     author: {
         type: String,
-        required: true,
-        minLength: 5,
+        required: [true,'Author is required'],
+        minLength: [5,'Author must be at least 5 characters'],
     },
     image: {
         type: String,
-        required: true,
+        required: [true,'Image is required'],
         validate: {
             validator: function (value) {
                 return value.startsWith('http://') || value.startsWith('https://');
@@ -23,19 +23,19 @@ const bookSchema = new mongoose.Schema({
     },
     review: {
         type: String,
-        required: true,
-        minLength: 10,
+        required: [true,'Review is required'],
+        minLength: [10,'Review must be at least 10 characters'],
     },
     genre: {
         type: String,
-        required: true,
-        minLength: 3,
+        required: [true,'Genre is required'],
+        minLength: [3,'Genre must  be at lest 3 characters'],
     },
     stars: {
         type: Number,
-        required: true,
-        min: 1,
-        max: 5,
+        required: [true, 'Stars is required'],
+        min: [1, 'Must be at least 1 star'],
+        max: [5, 'Must be max 5 stars'],
     },
     wishList: {
         type: [mongoose.Types.ObjectId],
@@ -45,4 +45,8 @@ const bookSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
     },
-})
+});
+
+const Book = mongoose.model('Book', bookSchema);
+
+module.exports = Book;

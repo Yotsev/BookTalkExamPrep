@@ -20,8 +20,8 @@ exports.authentication = async (req, res, next)=>{
 };
 
 exports.isAuthenticated = (req, res, next)=>{
-    if (req.user) {
-        return res.redirect('/login');
+    if (!req.user) {
+        return res.redirect('/auth/login');
     }
 
     next();
