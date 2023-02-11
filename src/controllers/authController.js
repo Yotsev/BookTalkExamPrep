@@ -1,12 +1,12 @@
-const authController = require('express').Router();
+const authRouter = require('express').Router();
 const authService = require('../services/authService');
 const { getErrorMessage } = require('../utils/errorParser');
 
-authController.get('/register', (req, res) => {
+authRouter.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-authController.post('/register', async (req, res) => {
+authRouter.post('/register', async (req, res) => {
     const { username, email, password, repeatPassword } = req.body;
 
     try {
@@ -19,11 +19,11 @@ authController.post('/register', async (req, res) => {
     }
 });
 
-authController.get('/login', (req, res) => {
+authRouter.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-authController.post('/login', async (req, res) => {
+authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -36,9 +36,9 @@ authController.post('/login', async (req, res) => {
     }
 });
 
-authController.get('/logout', (req, res) => {
+authRouter.get('/logout', (req, res) => {
     res.clearCookie('auth');
     res.redirect('/');
 });
 
-module.exports = authController;
+module.exports = authRouter;
