@@ -52,13 +52,13 @@ bookRouter.get('/:id/details', async (req, res) => {
 
     if (isRegistered) {
         isAuthor = book.owner._id == req.user._id;
-        isWished = book.wishList.includes(req.params._id);
+        isWished = book.wishList.toString().includes(req.user._id);
     }
 
     res.render('book/details', { book, isRegistered, isAuthor, isWished });
 });
 
-//Get Wishlist Page TODO: the wish filed to be removed
+//Get Wishlist Page
 bookRouter.get('/:id/wishlist', isAuthenticated, async (req, res) => {
     const book = await bookService.getBookById(req.params.id);
     const user = req.user;
@@ -78,8 +78,6 @@ bookRouter.get('/:id/wishlist', isAuthenticated, async (req, res) => {
 
         await bookService.wishlistBook(book._id, user._id);
 
-        res.locals.isWished = true
-
         res.redirect(`/book/${req.params.id}/details`);
     } catch (err) {
         console.log(err);
@@ -93,6 +91,7 @@ bookRouter.get('/:id/edit', isAuthenticated, async (req, res) => {
     res.render('book/edit', {book});
 });
 
+//Post Edit Page
 bookRouter.post('/:id/edit', isAuthenticated, async (req, res)=> {
     const book = {
         title: req.body.title,
@@ -111,6 +110,7 @@ bookRouter.post('/:id/edit', isAuthenticated, async (req, res)=> {
 
 });
 
+//Get Delete Page
 bookRouter.get('/:id/delete', isAuthenticated, async (req, res)=> {
     await bookService.bookDelete(req.params.id);
 

@@ -37,10 +37,10 @@ const bookSchema = new mongoose.Schema({
         min: [1, 'Must be at least 1 star'],
         max: [5, 'Must be max 5 stars'],
     },
-    wishList: {
-        type: [mongoose.Types.ObjectId],
+    wishList: [{
+        type: mongoose.Types.ObjectId,
         ref: 'User',
-    },
+    }],
     owner: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

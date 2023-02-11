@@ -10,7 +10,7 @@ exports.getAllBooks = async ()=>{
 };
 
 exports.getBookById = async (id)=>{
-    return await Book.findById(id).populate('owner').lean();
+    return await Book.findById(id).populate('owner', 'wishList').lean();
 };
 
 exports.wishlistBook = async (bookId, user_id) => {
