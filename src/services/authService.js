@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Book = require('../models/Book');
 const jwt = require('../libs/jsonwebtoken');
 const config = require('../configs/config');
 
@@ -57,4 +58,10 @@ exports.login = async (email, password) => {
     const token = await jwt.sign(payload, config.SECRET);
 
     return token;
+};
+
+exports.userBooks = async (user_id) => {
+    const books = await Book.find().where('wishList').all([user_id]).lean();
+
+    return books;
 };

@@ -4,8 +4,13 @@ const { getErrorMessage } = require('../utils/errorParser');
 
 
 //Get Profile Page
-authRouter.get('/profile', (req, res)=> {
-    res.render('auth/profile');
+authRouter.get('/profile', async (req, res) => {
+
+    const books = await authService.userBooks(req.user._id);
+    const user = req.user;
+    const hasBooks = books.length >0;
+
+    res.render('auth/profile', { user, books, hasBooks });
 });
 
 //Get Reguster Page
@@ -22,7 +27,7 @@ authRouter.post('/register', async (req, res) => {
         res.cookie('auth', token);
         res.redirect('/');
     } catch (err) {
-        return res.status(400).render('auth/register', {error: getErrorMessage(err)});
+        return res.status(400).render('auth/register', { error: getErrorMessage(err) });
     }
 });
 
@@ -37,7 +42,7 @@ authRouter.post('/login', async (req, res) => {
 
     try {
         const token = await authService.login(email, password);
-        
+
         res.cookie('auth', token);
         res.redirect('/');
     } catch (err) {
